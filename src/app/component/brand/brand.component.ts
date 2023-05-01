@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { BrandService } from 'src/app/service/brand.service';
 
 @Component({
   selector: 'app-brand',
@@ -7,18 +8,29 @@ import { FormGroup, FormBuilder } from '@angular/forms';
   styleUrls: ['./brand.component.css']
 })
 export class BrandComponent {
-  brandForm! : FormGroup;
-  constructor(private fb: FormBuilder) {
-    
-  }
+  form! : FormGroup;
+  brands! : any[];
+
+  constructor(private fb: FormBuilder, private brandService: BrandService) { }
 
   ngOnInit(): void {
-    this.brandForm = this.fb.group({
-      brandName: ['']
+    this.form = this.fb.group({
+      name: ['']
     })
+    this.getAllBrands()
   }
 
   createBrand() {
-    alert("Brand Created!")
+    console.log(this.form.value);
+    this.brandService.saveBrand(this.form.value).subscribe(t => {
+      console.log(t)
+    })
+  }
+
+  getAllBrands(){
+    this.brandService.getBrand().subscribe(t =>{
+      console.log(t.list)
+      this.brands = t.list;
+    })
   }
 }

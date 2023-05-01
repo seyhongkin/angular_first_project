@@ -1,4 +1,4 @@
-<form [formGroup] = "brandForm" (ngSubmit) = "createBrand()">
+<form [formGroup] = "form" (ngSubmit) = "createBrand()">
     <div>
         Brand name: <input type="text" formControlName="name">
     </div>
@@ -8,3 +8,5 @@
         </button>
     </div>
 </form>
+
+<h3 *ngFor="let b of brands">{{b.name}}</h3>
